@@ -8,18 +8,26 @@ def load_data() -> List[int]:
 
 
 def count_increases(data: List[int]) -> int:
+    """
+    Iterate over pairs of list L, increase total if Lx > Lx - 1
+    """
     total: int = 0
     for index, measure in enumerate(data):
-        total = total + 1 if measure > data[index - 1] else total
+        if measure > data[index - 1]:
+            total = total + 1
 
     return total
 
 
 def count_window_increases(data: List[int]) -> int:
+    """
+    Iterate over overlapping 3-element tuples of list L, increase total if sum L(x) > sum L(x - 1)
+    """
     total: int = 0
     prev: int = sum(data[0:3])
     for window in sliding_window(data, 3):
-        total = total + 1 if sum(window) > prev else total
+        if sum(window) > prev:
+            total = total + 1
         prev = sum(window)
 
     return total
