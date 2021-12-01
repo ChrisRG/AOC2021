@@ -1,5 +1,4 @@
 from typing import List
-from more_itertools import sliding_window
 
 
 def load_data() -> List[int]:
@@ -8,27 +7,20 @@ def load_data() -> List[int]:
 
 
 def count_increases(data: List[int]) -> int:
-    """
-    Iterate over pairs of list L, increase total if Lx > Lx - 1
-    """
     total: int = 0
-    for index, measure in enumerate(data):
-        if measure > data[index - 1]:
+    for measures in zip(data, data[1:]):
+        if measures[1] > measures[0]:
             total = total + 1
 
     return total
 
 
 def count_window_increases(data: List[int]) -> int:
-    """
-    Iterate over overlapping 3-element tuples of list L, increase total if sum L(x) > sum L(x - 1)
-    """
     total: int = 0
-    prev: int = sum(data[0:3])
-    for window in sliding_window(data, 3):
-        if sum(window) > prev:
+    window_data = list(map(sum, zip(data, data[1:], data[2:])))
+    for measures in zip(window_data, window_data[1:]):
+        if measures[1] > measures[0]:
             total = total + 1
-        prev = sum(window)
 
     return total
 
