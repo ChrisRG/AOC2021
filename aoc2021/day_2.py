@@ -28,6 +28,22 @@ def calculate_changes(data: List[str]) -> tuple[int, int]:
     return (sum(horiz_changes), sum(vert_changes))
 
 
+def calculate_aim(data: List[str]) -> tuple[int, int]:
+    """
+    For each line, calculate vertical change based on product of given horizontal amount and cumulative aim.
+    Update total horizontal and aim amounts.
+    Return the pair of horizontal and vertical changes.
+    """
+    horiz = 0
+    vert = 0
+    aim = 0
+    for line in map(parse_line, data):
+        vert += line[0] * aim
+        horiz += line[0]
+        aim += line[1]
+    return (horiz, vert)
+
+
 def test_data():
     test_directions = [
         "forward 5",
@@ -39,14 +55,20 @@ def test_data():
     ]
     horiz_changes, vert_changes = zip(*list(map(parse_line, test_directions)))
     assert (sum(horiz_changes) * sum(vert_changes)) == 150
-    print("Test passed.")
+
+    horiz_aim_changes, vert_aim_changes = calculate_aim(test_directions)
+    assert (horiz_aim_changes * vert_aim_changes) == 900
+    print("Test passed")
 
 
 def main() -> None:
     test_data()
     data = load_data()
     horiz_changes, vert_changes = calculate_changes(data)
-    print(horiz_changes * vert_changes)
+    print(f"Part 1: {horiz_changes * vert_changes}")
+
+    horiz_aim_changes, vert_aim_changes = calculate_aim(data)
+    print(f"Part 2: {horiz_aim_changes * vert_aim_changes}")
 
 
 if __name__ == "__main__":
