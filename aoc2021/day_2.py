@@ -1,4 +1,3 @@
-from os import wait
 from typing import List
 
 
@@ -8,6 +7,10 @@ def load_data() -> List[str]:
 
 
 def parse_line(line: str) -> List[int]:
+    """
+    Given a string containing a direction and amount, e.g. 'forward 10',
+    returns a pair of integers
+    """
     match line.split():
         case ["forward", amount]:
             return [int(amount), 0]
