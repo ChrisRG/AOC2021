@@ -5,7 +5,7 @@ description = ""
 authors = ["Chris Geekie <chris.geekie@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 mypy = "^0.910"
 flake8 = "^4.0.1"
 more-itertools = "^8.12.0"
