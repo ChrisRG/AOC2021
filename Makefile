@@ -10,4 +10,5 @@ black:
 setup:
 	touch aoc2021/day_$(day).py
 	touch inputs/day_$(day)_input.txt
+	touch inputs/day_$(day)_test.txt
 	touch puzzles/day_$(day).md
