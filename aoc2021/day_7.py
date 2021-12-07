@@ -45,7 +45,10 @@ def calculate_normal_fuel(crabs: List[int], position: int) -> int:
 
 def calculate_expensive_fuel(crabs: List[int], position: int) -> int:
     # Fuel cost => sum of numbers from 1 to N inclusive, where N is absolute distance between crab pos and given pos
-    return sum(list(map(lambda x: sum(list(range(1, abs(x - position) + 1))), crabs)))
+    # Alternative equation for triangular numbers: n * (n + 1) // 2
+    return sum(
+        list(map(lambda x: abs(x - position) * (abs(x - position) + 1) // 2, crabs))
+    )
 
 
 def test_data() -> None:
