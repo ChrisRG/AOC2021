@@ -6,12 +6,12 @@ def load_data(filepath: str) -> List[List[int]]:
         return [[int(i) for i in list(line.rstrip())] for line in f.readlines()]
 
 
-def octo_print():
+def octo_print(octos: List[List[int]]):
     for line in octos:
         print(line)
 
 
-def neighbors(index: tuple[int, int]) -> List[tuple[int, int]]:
+def neighbors(index: tuple[int, int], octos: List[List[int]]) -> List[tuple[int, int]]:
     neighbors = []
     for y in range(-1, 2):
         for x in range(-1, 2):
@@ -23,14 +23,14 @@ def neighbors(index: tuple[int, int]) -> List[tuple[int, int]]:
     return neighbors
 
 
-def total_flashes() -> int:
+def total_flashes(octos: List[List[int]]) -> int:
     total = 0
     for _ in range(0, 100):
-        total += step()[0]
+        total += step(octos)[0]
     return total
 
 
-def step() -> tuple[int, bool]:
+def step(octos: List[List[int]]) -> tuple[int, bool]:
     total = 0
     simul_flash = False
     to_flash = []
@@ -44,7 +44,7 @@ def step() -> tuple[int, bool]:
         octo = to_flash.pop()
         total += 1
         flashed.append(octo)
-        for nbor in neighbors(octo):
+        for nbor in neighbors(octo, octos):
             nbor_y, nbor_x = nbor
             octos[nbor_y][nbor_x] = (octos[nbor_y][nbor_x] + 1) % 10
             if octos[nbor_y][nbor_x] == 0 and nbor not in flashed:
@@ -54,36 +54,36 @@ def step() -> tuple[int, bool]:
     return (total, simul_flash)
 
 
-def simul_flash() -> int:
+def simul_flash(octos: List[List[int]]) -> int:
     n = 0
     simul_flash = False
     while simul_flash == False:
-        _, simul_flash = step()
+        _, simul_flash = step(octos)
         n += 1
     return n
 
 
 def test_data():
     print("Testing...")
-    global octos
     octos = load_data("inputs/day_11_test.txt")
 
-    # test1 = total_flashes()
-    # print(f"Total: {test1}")
+    test1 = total_flashes(octos)
+    print(f"Total: {test1}")
 
-    # simul = simul_flash()
+    octos = load_data("inputs/day_11_test.txt")
+    simul = simul_flash(octos)
 
-    # print(f"Simul flash: Step {simul}")
+    print(f"Simul flash: Step {simul}")
     print("Test passed.")
 
 
 def main():
     test_data()
-    global octos
     octos = load_data("inputs/day_11_input.txt")
-    # part1 = total_flashes()
-    # print(f"Part 1: {part1}")
-    simul = simul_flash()
+    part1 = total_flashes(octos)
+    print(f"Part 1: {part1}")
+    octos = load_data("inputs/day_11_input.txt")
+    simul = simul_flash(octos)
     print(f"Part 2: {simul}")
 
 
